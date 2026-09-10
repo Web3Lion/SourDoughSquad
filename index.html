@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Sourdough Squad | Baked with Superhero Strength!</title>
+  <!-- Google Fonts: Comic / Retro Vibe -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Permanent+Marker&family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==================== GLOBAL STYLES ==================== */
+    :root {
+      --hero-green: #1f5038;
+      --hero-gold: #e2a037;
+      --hero-red: #d32f2f;
+      --paper-bg: #f4ede2;
+      --dark-ink: #1a1a1a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--paper-bg);
+      background-image: radial-gradient(var(--dark-ink) 8%, transparent 8%);
+      background-size: 12px 12px; /* Halftone Dot Effect */
+      color: var(--dark-ink);
+      font-family: 'Roboto', sans-serif;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      padding: 30px 20px 10px;
+      background: var(--paper-bg);
+      border-bottom: 5px solid var(--dark-ink);
+    }
+
+    .main-logo {
+      max-width: 450px;
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(4px 4px 0px var(--dark-ink));
+    }
+
+    .tagline-banner {
+      font-family: 'Bangers', cursive;
+      font-size: 1.8rem;
+      background-color: var(--hero-gold);
+      color: var(--dark-ink);
+      display: inline-block;
+      padding: 8px 25px;
+      margin-top: 15px;
+      transform: rotate(-1deg);
+      border: 3px solid var(--dark-ink);
+      box-shadow: 4px 4px 0px var(--dark-ink);
+    }
+
+    section {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .section-title {
+      font-family: 'Bangers', cursive;
+      font-size: 3rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 3px 3px 0px var(--hero-gold), 5px 5px 0px var(--dark-ink);
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    /* ==================== CARD FLIP MENU (HEROES) ==================== */
+    .hero-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .flip-card {
+      background-color: transparent;
+      width: 340px;
+      height: 520px;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transform-style: preserve-3d;
+      border: 5px solid var(--dark-ink);
+      border-radius: 12px;
+      box-shadow: 8px 8px 0px var(--dark-ink);
+    }
+
+    .flip-card:hover .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-front, .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .card-front img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card-back {
+      background-color: #fff8eb;
+      color: var(--dark-ink);
+      transform: rotateY(180deg);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 25px;
+      border: 3px solid var(--hero-green);
+    }
+
+    .card-back h3 {
+      font-family: 'Bangers', cursive;
+      font-size: 2.2rem;
+      color: var(--hero-green);
+    }
+
+    .card-back .price {
+      font-family: 'Bangers', cursive;
+      font-size: 2rem;
+      background: var(--hero-gold);
+      padding: 5px 15px;
+      border: 2px solid var(--dark-ink);
+      display: inline-block;
+      margin: 10px auto;
+      transform: rotate(-2deg);
+    }
+
+    .card-back p {
+      font-size: 1.1rem;
+      line-height: 1.4;
+      font-weight: 700;
+    }
+
+    .card-back img.loaf-photo {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border: 3px solid var(--dark-ink);
+      border-radius: 8px;
+      margin: 10px 0;
+    }
+
+    .btn-action {
+      font-family: 'Bangers', cursive;
+      font-size: 1.5rem;
+      background: var(--hero-red);
+      color: #fff;
+      padding: 10px 20px;
+      border: 3px solid var(--dark-ink);
+      box-shadow: 3px 3px 0px var(--dark-ink);
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: 0.1s;
+    }
+
+    .btn-action:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0px var(--dark-ink);
+    }
+
+    /* ==================== VILLAIN SECTION ==================== */
+    .villain-section {
+      background: #111;
+      color: #fff;
+      padding: 40px 20px;
+      border-top: 8px solid var(--hero-gold);
+      border-bottom: 8px solid var(--hero-gold);
+      position: relative;
+    }
+
+    .villain-section .section-title {
+      color: #ff5722;
+      text-shadow: 3px 3px 0px #000, 5px 5px 0px var(--hero-gold);
+    }
+
+    .villain-card {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #222;
+      border: 6px solid #ff5722;
+      box-shadow: 10px 10px 0px var(--dark-ink);
+      display: flex;
+      flex-wrap: wrap;
+      overflow: hidden;
+    }
+
+    .villain-img {
+      flex: 1 1 400px;
+    }
+
+    .villain-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .villain-info {
+      flex: 1 1 400px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .villain-info h3 {
+      font-family: 'Bangers', cursive;
+      font-size: 3rem;
+      color: #ffaa00;
+    }
+
+    .villain-price {
+      font-family: 'Bangers', cursive;
+      font-size: 2rem;
+      color: #fff;
+      margin-bottom: 15px;
+    }
+
+    .speech-bubble {
+      position: relative;
+      background: #ffffff;
+      border: 4px solid #000;
+      color: #000;
+      padding: 15px;
+      font-family: 'Permanent Marker', cursive;
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      border-radius: 10px;
+    }
+
+    .timer-box {
+      background: #000;
+      border: 2px dashed #ff5722;
+      padding: 10px;
+      text-align: center;
+      margin-bottom: 20px;
+      font-family: 'Bangers', cursive;
+      color: #ffaa00;
+      font-size: 1.3rem;
+    }
+
+    /* ==================== ORIGIN STORY COMIC STRIP ==================== */
+    .origin-strip {
+      max-width: 1000px;
+      margin: 30px auto 0;
+      text-align: center;
+    }
+
+    .origin-strip img {
+      width: 100%;
+      height: auto;
+      border: 5px solid var(--hero-gold);
+      box-shadow: 8px 8px 0px #000;
+    }
+
+    .origin-caption {
+      font-family: 'Permanent Marker', cursive;
+      color: var(--hero-gold);
+      margin-top: 12px;
+      font-size: 1rem;
+    }
+
+    /* ==================== HALL OF DEFEATED VILLAINS ==================== */
+    .defeated-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .defeated-card {
+      position: relative;
+      width: 280px;
+      background: #ccc;
+      border: 4px solid var(--dark-ink);
+      filter: grayscale(100%) contrast(120%);
+      opacity: 0.8;
+      box-shadow: 5px 5px 0px var(--dark-ink);
+      transition: filter 0.3s;
+    }
+
+    .defeated-card:hover {
+      filter: grayscale(40%);
+    }
+
+    .defeated-card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+
+    .defeated-stamp {
+      position: absolute;
+      top: 35%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-15deg);
+      font-family: 'Bangers', cursive;
+      font-size: 2.8rem;
+      color: var(--hero-red);
+      border: 5px solid var(--hero-red);
+      padding: 5px 15px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      white-space: nowrap;
+      background: rgba(255, 255, 255, 0.85);
+      pointer-events: none;
+    }
+
+    .defeated-details {
+      padding: 15px;
+      background: #eee;
+      text-align: center;
+    }
+
+    .btn-resurrect {
+      font-family: 'Bangers', cursive;
+      font-size: 1.1rem;
+      background: #555;
+      color: #fff;
+      border: 2px solid #000;
+      padding: 5px 10px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 30px;
+      background: var(--dark-ink);
+      color: #fff;
+      font-family: 'Bangers', cursive;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER / HERO BRANDING -->
+  <header>
+    <!-- Clean 3D logo lockup -->
+    <img src="Gemini_Generated_Image_roja0sroja0sroja.jpeg" alt="The Sourdough Squad Logo" class="main-logo" />
+    <br>
+    <div class="tagline-banner">BAKED WITH SUPERHERO STRENGTH! • SAVING BREAD, ONE LOAF AT A TIME!</div>
+  </header>
+
+  <!-- SECTION 1: THE HEROES (REGULAR MENU) -->
+  <section>
+    <h2 class="section-title">The Daily Defenders (Our Regular Loaves)</h2>
+    <p style="text-align: center; font-weight: bold; margin-bottom: 25px;">[ Hover or Tap a Card to Reveal the Loaf Stats & Order! ]</p>
+
+    <div class="hero-grid">
+
+      <!-- CARD 1: CLASSIC LOAF / CAPTAIN CRUST -->
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="card-front">
+            <!-- Hero Trading Card Image -->
+            <img src="Gemini_Generated_Image_zb8gfzb8gfzb8gfz.jpeg" alt="Captain Crust Card" />
+          </div>
+          <div class="card-back">
+            <h3>Classic Sourdough</h3>
+            <div class="price">$8.00</div>
+            <img src="loaf_crop.jpeg" alt="Classic Loaf Photo" class="loaf-photo" />
+            <p>Protected by Captain Crust! Golden, crispy crust on the outside, airy soft crumb on the inside. Crafted with 100% natural starter power.</p>
+            <button class="btn-action">Order Classic Loaf</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 2: JALAPENO CHEDDAR / ROLLING PIN RITA -->
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="card-front">
+            <!-- Hero Trading Card Image -->
+            <img src="Gemini_Generated_Image_p1snm9p1snm9p1sn.jpeg" alt="Rolling Pin Rita Card" />
+          </div>
+          <div class="card-back">
+            <h3>Jalapeño Cheddar</h3>
+            <div class="price">$12.00</div>
+            <img src="loaf_crop.jpeg" alt="Jalapeno Cheddar Photo" class="loaf-photo" />
+            <p>Rolling Pin Rita brings the heat! Packed with fresh jalapeño slices and melted sharp cheddar chunks for a fiery punch!</p>
+            <button class="btn-action">Order Jalapeño Loaf</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 2: LIMITED EDITION VILLAIN -->
+  <div class="villain-section">
+    <section>
+      <h2 class="section-title">Current Seasonal Battle!</h2>
+
+      <div class="villain-card">
+        <div class="villain-img">
+          <!-- Villain Battle Art Image -->
+          <img src="Gemini_Generated_Image_wko6mewko6mewko6.jpeg" alt="Squad vs Pumpkin King" />
+        </div>
+        <div class="villain-info">
+          <h3>VILLAIN #1: THE PUMPKIN KING</h3>
+          <div class="villain-price">LIMITED EDITION — $12.00</div>
+
+          <div class="speech-bubble">
+            "YOU CANNOT RESIST MY CINNAMON SPICE & PUMPKIN DOUGH! I WILL DOMINATE AUTUMN!"
+          </div>
+
+          <div class="timer-box">
+            <span>DEFEAT DEADLINE: </span><span id="countdown">14 DAYS 08:32:10</span>
+          </div>
+
+          <button class="btn-action" style="background:#ff5722;" onclick="alert('You conquered the Pumpkin King! Added to cart.')">
+            CONQUER THIS LOAF (ORDER NOW)
+          </button>
+        </div>
+      </div>
+
+      <!-- ORIGIN STORY COMIC STRIP -->
+      <div class="origin-strip">
+        <img src="Gemini_Generated_Image_kdxurrkdxurrkdxu.jpeg" alt="The Sourdough Squad: Harvest of Horror comic strip" />
+        <p class="origin-caption">★ THE LEGEND OF THE HARVEST BATTLE ★</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- SECTION 3: HALL OF DEFEATED VILLAINS -->
+  <section>
+    <h2 class="section-title">Hall of Defeated Villains</h2>
+    <p style="text-align: center; font-weight: bold;">Retired seasonal loaves vanquished by the Squad. Want them back? Vote for a revival!</p>
+
+    <div class="defeated-grid">
+
+      <!-- RETIRED VILLAIN EXAMPLE -->
+      <div class="defeated-card">
+        <div class="defeated-stamp">DEFEATED!</div>
+        <!-- Placeholder crest art -- swap in real Garlic Goblin artwork once generated -->
+        <img src="Gemini_Generated_Image_qfxem6qfxem6qfxe.jpeg" alt="Defeated Loaf" />
+        <div class="defeated-details">
+          <h4>The Garlic Goblin</h4>
+          <p style="font-size: 0.9rem; margin: 5px 0;">Roasted Garlic & Rosemary Sourdough</p>
+          <button class="btn-resurrect" onclick="alert('Vote received! The Squad will consider summoning this flavor back.')">
+            ⚡ Summon Back (Vote)
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2026 THE SOURDOUGH SQUAD CORP. ALL RIGHTS RESERVED.</p>
+  </footer>
+
+  <!-- SCRIPT FOR COUNTDOWN TIMER & INTERACTION -->
+  <script>
+    // Countdown Timer Logic for Seasonal Villain
+    let hours = 14 * 24;
+    function updateTimer() {
+      const timerElement = document.getElementById('countdown');
+      let now = new Date();
+      let days = Math.floor(hours / 24);
+      let hrs = hours % 24;
+      let mins = 59 - now.getMinutes();
+      let secs = 59 - now.getSeconds();
+      timerElement.innerHTML = `${days}D ${hrs}H ${mins}M ${secs}S`;
+    }
+    setInterval(updateTimer, 1000);
+  </script>
+</body>
+</html>
