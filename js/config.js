@@ -1,5 +1,5 @@
 // ==================== SOURDOUGH SQUAD SETTINGS ====================
-// Edit this file to connect the order log and payments. See SETUP.md.
+// Edit this file to connect the order log and payments. See README.md.
 
 window.SQUAD_CONFIG = {
   // Web app URL from your Google Apps Script deployment (ends in /exec).

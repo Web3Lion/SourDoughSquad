@@ -2,7 +2,7 @@
  * Sourdough Squad order log + owner dashboard API.
  *
  * Paste this into a Google Apps Script project attached to your Google Sheet
- * (Extensions > Apps Script), then deploy it as a Web app. See SETUP.md.
+ * (Extensions > Apps Script), then deploy it as a Web app. See README.md.
  *
  * - The website POSTs orders and revival votes here; they land on the
  *   "Orders" and "Votes" tabs (created automatically).

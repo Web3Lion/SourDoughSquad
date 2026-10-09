@@ -61,7 +61,7 @@
   function fetchOrders() {
     if (state.demo) return Promise.resolve();
     if (!config.ORDER_LOG_URL) {
-      return Promise.reject(new Error('ORDER_LOG_URL is empty in js/config.js. Try sample data, or see SETUP.md.'));
+      return Promise.reject(new Error('ORDER_LOG_URL is empty in js/config.js. Try sample data, or see README.md.'));
     }
     var url = config.ORDER_LOG_URL + '?key=' + encodeURIComponent(state.key);
     return fetch(url).then(function (res) { return res.json(); }).then(function (data) {
