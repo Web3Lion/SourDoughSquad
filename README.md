@@ -56,6 +56,7 @@ It runs entirely on **GitHub Pages**. No server, hosting bill or database to man
 | `js/order.js` | Cart, checkout and voting code for the storefront |
 | `js/dashboard.js` | Dashboard code |
 | `google-apps-script/Code.gs` | Script you paste into Google Sheets. It saves orders and votes and powers the dashboard |
+| `qr/` | QR codes for the store and the dashboard (SVG for the web, PNG for printing) |
 | `*.jpeg` | Logo, hero cards and comic art |
 
 ---
@@ -236,6 +237,16 @@ Whenever you change `Code.gs`:
 
 This keeps the **same URL**, so you don't need to change `config.js`.
 (Choosing *New deployment* instead would give you a new URL.)
+
+### QR codes
+
+- **Store QR:** shown near the bottom of the store with a **Download QR Code** button. Print it for flyers,
+  table signs or bread bags. It opens `https://web3lion.github.io/SourDoughSquad/`.
+- **Dashboard QR:** in the **📱 Take HQ To Go** panel at the bottom of the dashboard. Scan it to open the dashboard
+  on your phone at the pickup table. It still asks for the password.
+
+The files are `qr/qr-store.*` and `qr/qr-dashboard.*`. If the site's web address ever changes (for example a custom
+domain), make new QR codes for the new address with any free QR generator and replace these files, keeping the same names.
 
 ### Change the dashboard password
 

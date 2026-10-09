@@ -519,6 +519,43 @@
 
     #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+    /* ==================== QR CODE ==================== */
+    .qr-section { text-align: center; }
+
+    .qr-card {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      background: #fff8eb;
+      border: 5px solid var(--dark-ink);
+      box-shadow: 8px 8px 0px var(--dark-ink);
+      padding: 24px;
+      max-width: 100%;
+      transform: rotate(-1deg);
+    }
+
+    .qr-card img {
+      width: 200px;
+      max-width: 100%;
+      height: auto;
+      border: 4px solid var(--dark-ink);
+      background: #fff;
+    }
+
+    .qr-text { max-width: 320px; text-align: left; }
+
+    .qr-text h3 {
+      font-family: 'Bangers', cursive;
+      font-size: 2.2rem;
+      color: var(--hero-green);
+      line-height: 1.1;
+    }
+
+    .qr-text p { font-weight: 700; margin: 8px 0 14px; line-height: 1.4; }
+    .qr-text a.btn-action { display: inline-block; font-size: 1.2rem; text-decoration: none; }
+
     /* Footer */
     footer {
       text-align: center;
@@ -642,6 +679,18 @@
         </div>
       </div>
 
+    </div>
+  </section>
+
+  <!-- QR CODE: SHARE THE SQUAD -->
+  <section class="qr-section">
+    <div class="qr-card">
+      <img src="qr/qr-store.svg" alt="QR code linking to the Sourdough Squad website" width="200" height="200" />
+      <div class="qr-text">
+        <h3>Summon the Squad!</h3>
+        <p>Scan with your phone camera to order anytime, or print it and share it with your crew.</p>
+        <a class="btn-action" href="qr/qr-store.png" download="sourdough-squad-qr.png">Download QR Code</a>
+      </div>
     </div>
   </section>
 

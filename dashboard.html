@@ -290,6 +290,11 @@
     }
     #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+    .qr-panel { display: flex; flex-wrap: wrap; align-items: center; gap: 24px; }
+    .qr-panel img { width: 180px; max-width: 100%; height: auto; border: 4px solid var(--dark-ink); background: #fff; }
+    .qr-panel p { font-weight: 700; margin-bottom: 12px; max-width: 420px; line-height: 1.4; }
+    .qr-panel a.btn { display: inline-block; text-decoration: none; }
+
     @media (max-width: 800px) {
       .two-col { grid-template-columns: 1fr; }
       header h1 { font-size: 2rem; }
@@ -358,6 +363,18 @@
       <div class="panel">
         <h2>⚡ Villain Revival Votes</h2>
         <div id="votes"></div>
+      </div>
+
+      <div class="panel">
+        <h2>📱 Take HQ To Go</h2>
+        <div class="qr-panel">
+          <img src="qr/qr-dashboard.svg" alt="QR code linking to this owner dashboard" width="180" height="180" />
+          <div>
+            <p>Scan to open the dashboard on your phone, so you can mark orders picked up right at the pickup table.
+              You'll still need the password.</p>
+            <a class="btn" href="qr/qr-dashboard.png" download="squad-hq-dashboard-qr.png">Download QR Code</a>
+          </div>
+        </div>
       </div>
     </div>
   </main>
