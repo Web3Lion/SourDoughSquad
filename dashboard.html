@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Squad HQ | Owner Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Permanent+Marker&family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --hero-green: #1f5038;
+      --hero-gold: #e2a037;
+      --hero-red: #d32f2f;
+      --villain: #ff5722;
+      --paper-bg: #f4ede2;
+      --card-bg: #fff8eb;
+      --dark-ink: #1a1a1a;
+      --muted: #6b6257;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--paper-bg);
+      background-image: radial-gradient(rgba(26, 26, 26, 0.12) 8%, transparent 8%);
+      background-size: 12px 12px;
+      color: var(--dark-ink);
+      font-family: 'Roboto', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .bangers { font-family: 'Bangers', cursive; letter-spacing: 1px; }
+
+    header {
+      background: var(--hero-green);
+      color: #fff;
+      border-bottom: 6px solid var(--dark-ink);
+      padding: 18px 16px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    header h1 {
+      font-family: 'Bangers', cursive;
+      font-size: 2.6rem;
+      letter-spacing: 2px;
+      text-shadow: 3px 3px 0 var(--dark-ink);
+    }
+
+    header h1 small {
+      display: block;
+      font-family: 'Permanent Marker', cursive;
+      font-size: 1rem;
+      letter-spacing: 0;
+      color: var(--hero-gold);
+      text-shadow: none;
+    }
+
+    .header-tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    #last-updated { font-size: 0.85rem; opacity: 0.85; }
+
+    .btn {
+      font-family: 'Bangers', cursive;
+      font-size: 1.15rem;
+      letter-spacing: 1px;
+      background: var(--hero-gold);
+      color: var(--dark-ink);
+      border: 3px solid var(--dark-ink);
+      box-shadow: 3px 3px 0 var(--dark-ink);
+      padding: 6px 14px;
+      cursor: pointer;
+    }
+
+    .btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--dark-ink); }
+    .btn.red { background: var(--hero-red); color: #fff; }
+    .btn.ghost { background: #fff; }
+
+    main { max-width: 1200px; margin: 0 auto; padding: 24px 16px 60px; }
+
+    .panel {
+      background: var(--card-bg);
+      border: 4px solid var(--dark-ink);
+      box-shadow: 6px 6px 0 var(--dark-ink);
+      padding: 20px;
+      margin-bottom: 26px;
+    }
+
+    .panel h2 {
+      font-family: 'Bangers', cursive;
+      font-size: 2rem;
+      letter-spacing: 1px;
+      color: var(--hero-green);
+      margin-bottom: 14px;
+    }
+
+    .hint { color: var(--muted); font-size: 0.95rem; margin-bottom: 12px; }
+
+    /* ---------- Login ---------- */
+    #login { max-width: 520px; margin: 40px auto; text-align: center; }
+    #login input {
+      width: 100%;
+      font: inherit;
+      padding: 10px;
+      border: 3px solid var(--dark-ink);
+      margin: 10px 0 14px;
+    }
+    #login .btn { margin: 4px; }
+    #login-error { color: var(--hero-red); font-weight: 700; min-height: 1.4em; }
+
+    /* ---------- Filters ---------- */
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; }
+    .chip {
+      font-family: 'Bangers', cursive;
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+      background: #fff;
+      border: 3px solid var(--dark-ink);
+      padding: 4px 14px;
+      border-radius: 30px;
+      cursor: pointer;
+    }
+    .chip.active { background: var(--dark-ink); color: var(--hero-gold); }
+
+    /* ---------- KPI tiles ---------- */
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 18px;
+      margin-bottom: 26px;
+    }
+
+    .kpi {
+      background: #fff;
+      border: 4px solid var(--dark-ink);
+      box-shadow: 5px 5px 0 var(--dark-ink);
+      padding: 14px 16px;
+      transform: rotate(var(--tilt, 0deg));
+    }
+    .kpi:nth-child(odd) { --tilt: -0.8deg; }
+    .kpi:nth-child(even) { --tilt: 0.8deg; }
+    .kpi .label { font-weight: 900; text-transform: uppercase; font-size: 0.8rem; color: var(--muted); }
+    .kpi .value { font-family: 'Bangers', cursive; font-size: 2.8rem; line-height: 1.1; }
+    .kpi .sub { font-size: 0.85rem; color: var(--muted); }
+
+    /* ---------- Bake list + progress ---------- */
+    .two-col {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 26px;
+      margin-bottom: 26px;
+    }
+    .two-col .panel { margin-bottom: 0; }
+
+    .bake-item { margin-bottom: 18px; }
+    .bake-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+    .bake-name { font-weight: 900; font-size: 1.1rem; }
+    .bake-count { font-family: 'Bangers', cursive; font-size: 2.4rem; line-height: 1; }
+    .bake-count small { font-size: 1rem; color: var(--muted); }
+    .loaf-row { font-size: 1.4rem; line-height: 1.3; margin: 2px 0 6px; word-break: break-all; }
+    .bar {
+      height: 18px;
+      background: #fff;
+      border: 3px solid var(--dark-ink);
+      overflow: hidden;
+    }
+    .bar > span {
+      display: block;
+      height: 100%;
+      background: repeating-linear-gradient(45deg, var(--hero-green) 0 10px, #2b6b4b 10px 20px);
+      transition: width 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .bar-label { font-size: 0.85rem; color: var(--muted); margin-top: 3px; }
+
+    .ring-wrap { text-align: center; position: relative; }
+    .ring-wrap svg { width: 100%; max-width: 220px; }
+    .ring-track { fill: none; stroke: #e8dfd0; stroke-width: 16; }
+    .ring-fill {
+      fill: none;
+      stroke: var(--hero-green);
+      stroke-width: 16;
+      stroke-linecap: round;
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+      transition: stroke-dashoffset 0.8s ease;
+    }
+    .ring-pct { font-family: 'Bangers', cursive; font-size: 46px; fill: var(--dark-ink); }
+    .ring-cap { font-weight: 900; font-size: 11px; fill: var(--muted); text-transform: uppercase; }
+    .pow {
+      display: inline-block;
+      font-family: 'Bangers', cursive;
+      font-size: 1.8rem;
+      background: var(--hero-gold);
+      border: 3px solid var(--dark-ink);
+      padding: 2px 14px;
+      transform: rotate(-4deg);
+      margin-top: 6px;
+    }
+
+    /* ---------- Orders board ---------- */
+    .board-tools { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+    .board-tools input {
+      flex: 1 1 220px;
+      font: inherit;
+      padding: 8px 10px;
+      border: 3px solid var(--dark-ink);
+    }
+
+    .orders { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+    .order {
+      background: #fff;
+      border: 3px solid var(--dark-ink);
+      box-shadow: 4px 4px 0 var(--dark-ink);
+      padding: 14px;
+      position: relative;
+      transition: opacity 0.2s;
+    }
+    .order.done { opacity: 0.6; background: #eef3ef; }
+    .order .oid { font-family: 'Bangers', cursive; font-size: 1.4rem; letter-spacing: 1px; }
+    .order .who { font-weight: 900; }
+    .order .meta { font-size: 0.85rem; color: var(--muted); margin: 2px 0 8px; word-break: break-word; }
+    .order ul { list-style: none; margin-bottom: 8px; }
+    .order li { font-weight: 700; }
+    .order .note { font-style: italic; font-size: 0.9rem; margin-bottom: 8px; }
+    .order .total { position: absolute; top: 12px; right: 14px; font-family: 'Bangers', cursive; font-size: 1.5rem; }
+    .toggles { display: flex; gap: 8px; }
+    .toggle {
+      flex: 1;
+      font-weight: 900;
+      font-size: 0.9rem;
+      padding: 7px 6px;
+      border: 3px solid var(--dark-ink);
+      background: #fff;
+      cursor: pointer;
+    }
+    .toggle.on { background: var(--hero-green); color: #fff; }
+    .stamp {
+      position: absolute;
+      right: 10px;
+      top: 44px;
+      font-family: 'Bangers', cursive;
+      font-size: 1.6rem;
+      color: var(--hero-red);
+      border: 3px solid var(--hero-red);
+      padding: 0 8px;
+      transform: rotate(-12deg);
+      background: rgba(255, 255, 255, 0.8);
+      pointer-events: none;
+    }
+    .empty { font-style: italic; color: var(--muted); padding: 10px 0; }
+
+    /* ---------- Votes ---------- */
+    .vote-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .vote-row .name { flex: 0 0 180px; font-weight: 700; }
+    .vote-row .bar { flex: 1; }
+    .vote-row .bar > span { background: var(--villain); }
+    .vote-row .n { font-family: 'Bangers', cursive; font-size: 1.4rem; min-width: 30px; text-align: right; }
+
+    #demo-banner {
+      background: var(--villain);
+      color: #fff;
+      text-align: center;
+      font-weight: 900;
+      padding: 8px 16px;
+      border-bottom: 4px solid var(--dark-ink);
+    }
+
+    #toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%) translateY(20px);
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.25s;
+      background: var(--dark-ink);
+      color: #fff;
+      font-family: 'Bangers', cursive;
+      font-size: 1.3rem;
+      padding: 10px 20px;
+      border: 3px solid var(--hero-gold);
+      max-width: calc(100% - 32px);
+      text-align: center;
+      z-index: 50;
+    }
+    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    @media (max-width: 800px) {
+      .two-col { grid-template-columns: 1fr; }
+      header h1 { font-size: 2rem; }
+      .vote-row .name { flex-basis: 120px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Squad HQ <small>Mission control for the Sourdough Squad</small></h1>
+    <div class="header-tools" id="header-tools" hidden>
+      <span id="last-updated"></span>
+      <button class="btn" id="refresh-btn" type="button">⟳ Refresh</button>
+      <button class="btn ghost" id="logout-btn" type="button">Lock</button>
+    </div>
+  </header>
+
+  <div id="demo-banner" hidden>DEMO MODE: sample orders only. Nothing here is real or saved.</div>
+
+  <main>
+    <!-- LOGIN -->
+    <div id="login" class="panel">
+      <h2>Owner Access</h2>
+      <p class="hint">Enter the dashboard key you set as <b>DASHBOARD_KEY</b> in Apps Script.</p>
+      <input id="key-input" type="password" placeholder="Dashboard key" autocomplete="current-password" />
+      <div id="login-error"></div>
+      <button class="btn red" id="login-btn" type="button">Enter HQ</button>
+      <button class="btn ghost" id="demo-btn" type="button">Try with sample data</button>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="dash" hidden>
+      <div class="chips" id="date-chips"></div>
+
+      <div class="kpis" id="kpis"></div>
+
+      <div class="two-col">
+        <div class="panel">
+          <h2>🔥 Bake List</h2>
+          <p class="hint">How many of each loaf the orders in this view need. The bar fills as loaves get picked up.</p>
+          <div id="bake-list"></div>
+        </div>
+        <div class="panel ring-wrap">
+          <h2>Mission Progress</h2>
+          <svg viewBox="0 0 200 200" role="img" aria-labelledby="ring-label">
+            <title id="ring-label">Percent of orders picked up</title>
+            <circle class="ring-track" cx="100" cy="100" r="80" />
+            <circle class="ring-fill" id="ring-fill" cx="100" cy="100" r="80" stroke-dasharray="502.65" stroke-dashoffset="502.65" />
+            <text class="ring-pct" id="ring-pct" x="100" y="108" text-anchor="middle">0%</text>
+            <text class="ring-cap" x="100" y="130" text-anchor="middle">orders completed</text>
+          </svg>
+          <div id="ring-note"></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>📋 Order Board</h2>
+        <div class="board-tools">
+          <input id="search" type="search" placeholder="Search name, order #, email..." />
+          <div class="chips" id="status-chips" style="margin-bottom:0"></div>
+        </div>
+        <div class="orders" id="orders"></div>
+      </div>
+
+      <div class="panel">
+        <h2>⚡ Villain Revival Votes</h2>
+        <div id="votes"></div>
+      </div>
+    </div>
+  </main>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
