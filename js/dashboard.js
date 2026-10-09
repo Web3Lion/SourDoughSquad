@@ -258,7 +258,7 @@
       $('#votes').innerHTML = '<p class="empty">No revival votes yet.</p>';
       return;
     }
-    var max = Math.max.apply(null, names.map(function (n) { return state.votes[n]; }));
+    var max = Math.max.apply(null, [1].concat(names.map(function (n) { return state.votes[n]; })));
     $('#votes').innerHTML = names.sort(function (a, b) { return state.votes[b] - state.votes[a]; }).map(function (n) {
       return '<div class="vote-row"><span class="name">' + escapeHtml(n) + '</span>' +
         '<div class="bar"><span style="width:' + Math.round(state.votes[n] / max * 100) + '%"></span></div>' +

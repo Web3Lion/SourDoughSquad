@@ -21,6 +21,10 @@ window.SQUAD_CONFIG = {
     pumpkin: ""
   },
 
+  // Retired loaves people can vote to bring back. Each name must match a
+  // data-vote="..." button in index.html and RETIRED in google-apps-script/Code.gs.
+  RETIRED: ["The Garlic Goblin"],
+
   // Menu. Prices here must match PRICES in google-apps-script/Code.gs.
   MENU: {
     classic:  { name: "Classic Sourdough",            price: 8.00,  emoji: "🍞" },

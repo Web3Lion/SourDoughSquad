@@ -355,6 +355,15 @@
       margin-top: 10px;
     }
 
+    .vote-count {
+      font-family: 'Bangers', cursive;
+      font-size: 1.2rem;
+      color: var(--hero-red);
+      min-height: 1.4em;
+    }
+
+    .btn-resurrect:disabled { cursor: default; opacity: 0.7; }
+
     /* ==================== CART & CHECKOUT ==================== */
     #cart-button {
       position: fixed;
@@ -626,6 +635,7 @@
         <div class="defeated-details">
           <h4>The Garlic Goblin</h4>
           <p style="font-size: 0.9rem; margin: 5px 0;">Roasted Garlic & Rosemary Sourdough</p>
+          <div class="vote-count" data-vote-count="The Garlic Goblin"></div>
           <button class="btn-resurrect" data-vote="The Garlic Goblin">
             ⚡ Summon Back (Vote)
           </button>

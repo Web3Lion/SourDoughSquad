@@ -65,6 +65,17 @@ It isn't linked from the storefront. Click **Try with sample data** to explore i
 
 The dashboard refreshes every minute. Changes are saved to the Google Sheet, so you can also edit the sheet directly.
 
+## Retiring a loaf (revival votes)
+
+Each retired loaf in the "Hall of Defeated Villains" shows its vote count, and each browser can vote once per loaf.
+The dashboard's **Villain Revival Votes** panel ranks them. To add a newly retired loaf:
+
+1. Copy a `defeated-card` block in `index.html` and change both `data-vote="..."` and `data-vote-count="..."` to the loaf's name.
+2. Add the same name to `RETIRED` in `js/config.js`.
+3. Add the same name to `RETIRED` in `google-apps-script/Code.gs`, then redeploy as a new version.
+
+Votes for names not in `RETIRED` are ignored.
+
 ## Changing the menu or prices
 
 Update the item in **both** places so they match:

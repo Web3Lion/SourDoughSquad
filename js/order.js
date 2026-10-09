@@ -193,6 +193,63 @@
     });
   }
 
+  // ---------- Revival votes ----------
+  var VOTED_KEY = 'squadVoted';
+  var voteCounts = {};
+
+  function votedFor() {
+    try { return JSON.parse(localStorage.getItem(VOTED_KEY) || '{}'); } catch (e) { return {}; }
+  }
+
+  function rememberVote(flavor) {
+    var voted = votedFor();
+    voted[flavor] = true;
+    try { localStorage.setItem(VOTED_KEY, JSON.stringify(voted)); } catch (e) {}
+  }
+
+  function renderVotes() {
+    var voted = votedFor();
+    document.querySelectorAll('[data-vote]').forEach(function (btn) {
+      if (voted[btn.dataset.vote]) {
+        btn.disabled = true;
+        btn.textContent = '✔ You voted!';
+      }
+    });
+    document.querySelectorAll('[data-vote-count]').forEach(function (el) {
+      var n = voteCounts[el.dataset.voteCount];
+      if (typeof n === 'number') el.textContent = '⚡ ' + n + (n === 1 ? ' vote' : ' votes') + ' to revive';
+    });
+  }
+
+  function setupVotes() {
+    document.querySelectorAll('[data-vote]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var flavor = btn.dataset.vote;
+        btn.disabled = true;
+        sendToLog({ type: 'vote', flavor: flavor }).then(function () {
+          rememberVote(flavor);
+          if (typeof voteCounts[flavor] === 'number') voteCounts[flavor]++;
+          renderVotes();
+          toast('Vote received! The Squad will consider summoning this flavor back.');
+        }, function () {
+          btn.disabled = false;
+          toast('Vote didn\'t send. Try again!');
+        });
+      });
+    });
+    renderVotes();
+
+    if (!config.ORDER_LOG_URL) return;
+    fetch(config.ORDER_LOG_URL + '?action=votes')
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        if (!data.ok) return;
+        voteCounts = data.votes;
+        renderVotes();
+      })
+      .catch(function () {});
+  }
+
   // ---------- Wire up ----------
   document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('[data-add]').forEach(function (btn) {
@@ -202,17 +259,7 @@
       });
     });
 
-    document.querySelectorAll('[data-vote]').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        btn.disabled = true;
-        sendToLog({ type: 'vote', flavor: btn.dataset.vote }).then(function () {
-          toast('Vote received! The Squad will consider summoning this flavor back.');
-        }, function () {
-          btn.disabled = false;
-          toast('Vote didn\'t send. Try again!');
-        });
-      });
-    });
+    setupVotes();
 
     $('#cart-button').addEventListener('click', openCart);
     $('#cart-close').addEventListener('click', closeCart);

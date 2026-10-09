@@ -6,6 +6,7 @@
  *
  * - The website POSTs orders and revival votes here; they land on the
  *   "Orders" and "Votes" tabs (created automatically).
+ * - GET ?action=votes returns public vote counts for the storefront.
  * - The owner dashboard (dashboard.html) reads orders and marks them
  *   paid / picked up. Those calls need DASHBOARD_KEY, which you set in
  *   Project Settings > Script Properties, so customers can't read the list.
@@ -19,6 +20,9 @@ var PRICES = {
   pumpkin:  { name: 'The Pumpkin King (Limited)', price: 12.00 }
 };
 var MENU_IDS = Object.keys(PRICES);
+
+// Retired loaves people can vote to bring back. Must match RETIRED in js/config.js.
+var RETIRED = ['The Garlic Goblin'];
 
 var ORDER_HEADERS = [
   'Timestamp', 'Order ID', 'Name', 'Email', 'Phone', 'Pickup Date',
@@ -52,8 +56,12 @@ function doPost(e) {
   }
 }
 
+// GET ?action=votes returns vote counts (public).
 // GET ?key=... returns all orders and vote counts for the dashboard.
 function doGet(e) {
+  if (e.parameter.action === 'votes') {
+    return json_({ ok: true, votes: tallyVotes_() });
+  }
   try {
     requireKey_(e.parameter.key);
   } catch (err) {
@@ -79,12 +87,16 @@ function doGet(e) {
     };
   });
 
-  var votes = {};
-  sheet_('Votes', VOTE_HEADERS).getDataRange().getDisplayValues().slice(1).forEach(function (r) {
-    votes[r[1]] = (votes[r[1]] || 0) + 1;
-  });
+  return json_({ ok: true, orders: orders, votes: tallyVotes_() });
+}
 
-  return json_({ ok: true, orders: orders, votes: votes });
+function tallyVotes_() {
+  var votes = {};
+  RETIRED.forEach(function (name) { votes[name] = 0; });
+  sheet_('Votes', VOTE_HEADERS).getDataRange().getDisplayValues().slice(1).forEach(function (r) {
+    if (r[1] in votes) votes[r[1]]++;
+  });
+  return votes;
 }
 
 function logOrder_(data) {
@@ -136,6 +148,7 @@ function updateOrder_(data) {
 }
 
 function logVote_(data) {
+  if (RETIRED.indexOf(data.flavor) === -1) throw new Error('unknown flavor');
   sheet_('Votes', VOTE_HEADERS).appendRow([new Date(), clean_(data.flavor)]);
 }
 
